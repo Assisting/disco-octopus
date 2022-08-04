@@ -53,11 +53,6 @@ namespace disco_octopus
             {
                 throw new ArgumentNullException("DiscordSocketClient cannot be null.");
             }
-            foreach (var guild in _client.Guilds)
-            {
-                await _intSvc.RegisterCommandsToGuildAsync(guild.Id);
-                Console.WriteLine($"Registered commands in {guild.Name} - {guild.Id}");
-            }
             Console.WriteLine($"Connected user {_client.CurrentUser}");
         }
 
