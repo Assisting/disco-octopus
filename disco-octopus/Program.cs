@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using disco_octopus.HttpClients;
+using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
@@ -59,6 +60,11 @@ namespace disco_octopus
         private ServiceProvider ConfigureServices()
         {
             return new ServiceCollection()
+                .AddHttpClient<IHawkingAPIClient, HawkingAPIClient>(client =>
+                {
+                    client.BaseAddress = new Uri(Environment.GetEnvironmentVariable("HawkingAPIAddress") ?? "http://localhost:7373");
+                })
+                .Services
                 .AddSingleton<DiscordSocketClient>()
                 .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()))
                 .AddSingleton<CommandHandler>()
