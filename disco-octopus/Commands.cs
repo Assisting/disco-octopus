@@ -17,7 +17,7 @@ namespace disco_octopus
         {
             long unixTimestamp = DateTimeOffset.UtcNow.AddHours(hour).AddMinutes(minute).ToUnixTimeSeconds();
 
-            await RespondAsync($"`<t:{unixTimestamp}>`", ephemeral: true);
+            await RespondAsync(embed: EmbedHelper.GenerateTimeEmbed(unixTimestamp), ephemeral: true);
         }
 
         [SlashCommand("exactly", "Generates fancy time text, based on the time you give it."), EnabledInDm(true)]
@@ -34,7 +34,7 @@ namespace disco_octopus
             {
                 long unixTimestamp = DateTimeOffset.Parse(utcTime).ToUnixTimeSeconds();
 
-                await RespondAsync($"Read time as <t:{unixTimestamp}>\n\n`<t:{unixTimestamp}>`", ephemeral: true);
+                await RespondAsync(embed: EmbedHelper.GenerateTimeEmbed(unixTimestamp), ephemeral: true);
             }
         }
     }
