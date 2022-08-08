@@ -25,10 +25,10 @@ namespace disco_octopus
         {
             HawkingResponse? hawkingResponse = await _api.FindDatesFromString(time);
             // I'm not taking chances
-            string? utcTime = hawkingResponse?.ParserOutputs?[0]?.DateRange?.Start;
+            string? utcTime = hawkingResponse?.ParserOutputs?.FirstOrDefault()?.DateRange?.Start;
             if (String.IsNullOrWhiteSpace(utcTime))
             {
-                await RespondAsync($"I didn't understand `{time}`", ephemeral: true);
+                await RespondAsync($"I didn't understand that time", ephemeral: true);
             }
             else
             {
