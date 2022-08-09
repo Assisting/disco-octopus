@@ -3,6 +3,7 @@ using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text.RegularExpressions;
 
 namespace disco_octopus
 {
@@ -25,6 +26,19 @@ namespace disco_octopus
                 client.Log += LogAsync;
                 intSvc.Log += LogAsync;
                 client.Ready += ReadyAsync;
+
+                _client.ModalSubmitted += async modal =>
+                {
+                    // Get the values of components.
+                    List<SocketMessageComponentData> components =
+                        modal.Data.Components.ToList();
+                    string logs = components
+                        .First(x => x.CustomId == "logs").Value;
+
+                    string pattern = @"(\[[^ ]*\])*<?([A-Z][a-z|'|-]* [A-Z][a-z|'|-]*)([A-Z][a-z]*)?>?(.*)";
+                    string result = Regex.Replace(logs, pattern, "$2$4");
+                    await modal.RespondAsync(result);
+                };
 
                 string token = Environment.GetEnvironmentVariable("DiscordBotToken") ?? "";
                 await client.LoginAsync(TokenType.Bot, token);

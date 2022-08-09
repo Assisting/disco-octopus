@@ -1,5 +1,6 @@
 ﻿using disco_octopus.HttpClients;
 using Discord.Interactions;
+using Discord;
 
 namespace disco_octopus
 {
@@ -36,6 +37,17 @@ namespace disco_octopus
 
                 await RespondAsync(embed: EmbedHelper.GenerateTimeEmbed(unixTimestamp), ephemeral: true);
             }
+        }
+
+        [SlashCommand("formatlogs", "Takes logs from ffxiv in-game chat and formats them to be prettier. Press enter to get started."), EnabledInDm(true)]
+        public async Task FormatLogs()
+        {
+            var mb = new ModalBuilder()
+            .WithTitle("Log Formatter")
+            .WithCustomId("format_logs")
+            .AddTextInput("Logs", "logs", TextInputStyle.Paragraph, "Silvaire AmeillaudLeviathan: Silvaire Ameillaud; of the Montroux Ameillauds.");
+
+            await Context.Interaction.RespondWithModalAsync(mb.Build());
         }
     }
 }
