@@ -3,7 +3,6 @@ using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
-using System.Text.RegularExpressions;
 
 namespace disco_octopus
 {
@@ -18,6 +17,7 @@ namespace disco_octopus
         {
             using (var services = ConfigureServices())
             {
+                ModalHandler modalHandler = new ModalHandler();
                 var client = services.GetRequiredService<DiscordSocketClient>();
                 var intSvc = services.GetRequiredService<InteractionService>();
                 _client = client;
@@ -26,6 +26,7 @@ namespace disco_octopus
                 client.Log += LogAsync;
                 intSvc.Log += LogAsync;
                 client.Ready += ReadyAsync;
+<<<<<<< Updated upstream
 
                 _client.ModalSubmitted += async modal =>
                 {
@@ -39,6 +40,9 @@ namespace disco_octopus
                     string result = Regex.Replace(logs, pattern, "$2$4");
                     await modal.RespondAsync(result, ephemeral: true);
                 };
+=======
+                client.ModalSubmitted += modalHandler.ResolveModal;
+>>>>>>> Stashed changes
 
                 string token = Environment.GetEnvironmentVariable("DiscordBotToken") ?? "";
                 await client.LoginAsync(TokenType.Bot, token);
