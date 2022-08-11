@@ -24,7 +24,7 @@ namespace disco_octopus
 
             string pattern = @"(\[[^ ]*\])*<?([A-Z][a-z|'|-]* [A-Z][a-z|'|-]*)([A-Z][a-z]*)?>?(.*)";
             string result = Regex.Replace(logs, pattern, "$2$4");
-            await modal.RespondAsync(result);
+            await modal.RespondAsync(result, ephemeral: true);
         }
     }
 }
