@@ -23,7 +23,7 @@ namespace disco_octopus
                 .First(x => x.CustomId == "logs").Value;
 
             // I will not elaborate on any of this for sake of friendship security
-            string pattern = @"(\[[^ ]*\])*<?\(?[^[A-Z]]*([A-Z][a-z|'|-]* [A-Z][a-z|'|-]*)([A-Z][a-z]*)?>?\)?(.*)";
+            string pattern = @"(\[[^ ]*\])*<?\(?[^A-Z]*([A-Z][a-z|'|-]* [A-Z][a-z|'|-]*)([A-Z][a-z]*)?>?\)?(.*\n)";
             string result = Regex.Replace(logs, pattern, "$2$4");
             await modal.RespondAsync(result, ephemeral: true);
         }
